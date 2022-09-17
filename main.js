@@ -1,10 +1,14 @@
 //#region Variables & Constants
 const collectionMain = document.querySelector("#collection-main");
 const collectionFavorites = document.querySelector("#collection-favorites");
+const collectionMainSort = document.querySelector("#collectionMainSort");
+const collectionFavSort = document.querySelector("#collectionFavSort");
 const asteroids = new Map();
 //#endregion
 //#region Execution
 fetch("https://api.le-systeme-solaire.net/rest/bodies?filter[]=bodyType,eq,asteroid&filter[]=meanRadius,gt,0").then(response => response.json()).then(data => buildCollectionMain(data));
+collectionMainSort.addEventListener("click", () => sortCollection(collectionMain));
+collectionFavSort.addEventListener("click", () => sortCollection(collectionFavorites));
 //endregion
 //#region Functions
 function buildCollectionMain(data)
@@ -33,6 +37,7 @@ function buildEntry(asteroid)
     let h2Text = document.createTextNode(astName);
     h2.appendChild(h2Text);
     itemDiv.appendChild(h2);
+    itemDiv.dataset.astName = astName;
 
     let ul = document.createElement("ul");
     itemDiv.appendChild(ul);
@@ -79,5 +84,23 @@ function moveClickedItem(clickEvent)
         target.classList.add("transition");
         target.style.transform = "translate(0)";
     }, 1);
+}
+
+function sortCollection(targetCollection)
+{
+    let children = targetCollection.childNodes;
+    let childrenArr = Array.from(children);
+    childrenArr.sort((a, b) => compareStrings(a.dataset.astName, b.dataset.astName));
+    for (let child of childrenArr)
+    {
+        targetCollection.appendChild(child);
+    }
+}
+
+function compareStrings(str1, str2)
+{
+    if (str1.toLowerCase() < str2.toLowerCase()) { return -1; }
+    if (str1.toLowerCase() > str2.toLowerCase()) { return 1; }
+    return 0;
 }
 //#endregion
