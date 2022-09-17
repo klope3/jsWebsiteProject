@@ -1,62 +1,47 @@
-//#region Classes
-class FakeObject
-{
-    constructor(name, size, color, isPopular)
-    {
-        this.name = name;
-        this.size = size;
-        this.color = color;
-        this.isPopular = isPopular;
-    }
-}
-//#endregion
 //#region Variables & Constants
-const dataObjects = 
-[
-    new FakeObject("Item 1", "15", "Red", "No"),
-    new FakeObject("Item 2", "132", "Green", "Yes"),
-    new FakeObject("Item 3", "111", "Orange", "Yes"),
-    new FakeObject("Item 4", "83", "Purple", "No"),
-    new FakeObject("Item 5", "40", "Purple", "No"),
-    new FakeObject("Item 6", "69", "Red", "Yes"),
-    new FakeObject("Item 7", "12", "Black", "No"),
-    new FakeObject("Item 8", "6", "Green", "No"),
-];
 const collectionMain = document.querySelector("#collection-main");
 const collectionFavorites = document.querySelector("#collection-favorites");
-const items = buildCollectionMain();
+const asteroids = new Map();
 //#endregion
+//#region Execution
+fetch("https://api.le-systeme-solaire.net/rest/bodies?filter[]=bodyType,eq,asteroid&filter[]=meanRadius,gt,0").then(response => response.json()).then(data => buildCollectionMain(data));
+//endregion
 //#region Functions
-function buildCollectionMain()
+function buildCollectionMain(data)
 {
-    let newItems = [];
-    for (let obj of dataObjects)
+    console.log(data);
+    for (let ast of data.bodies)
     {
-        let itemFromData = buildItem(obj);
-        collectionMain.appendChild(itemFromData);
-        newItems.push(itemFromData);
+        let builtEntry = buildEntry(ast);
+        asteroids.set(builtEntry, ast);
+        collectionMain.appendChild(builtEntry);
     }
-    return newItems;
+    console.log(asteroids);
 }
 
-function buildItem(fakeObject)
+function buildEntry(asteroid)
 {
     let itemDiv = document.createElement("div");
     itemDiv.classList.add("item");
     itemDiv.addEventListener("click", clickEvent => moveClickedItem(clickEvent));
 
     let h2 = document.createElement("h2");
-    let h2Text = document.createTextNode(fakeObject.name);
+    let astName = asteroid.englishName.split(" ");
+    astName.shift();
+    astName = astName.join();
+    astName = astName.replace(",", " ");
+    let h2Text = document.createTextNode(astName);
     h2.appendChild(h2Text);
     itemDiv.appendChild(h2);
 
     let ul = document.createElement("ul");
     itemDiv.appendChild(ul);
 
-    ul.appendChild(buildItemDataRow("Name:", fakeObject.name));
-    ul.appendChild(buildItemDataRow("Size:", fakeObject.size));
-    ul.appendChild(buildItemDataRow("Color:", fakeObject.color));
-    ul.appendChild(buildItemDataRow("Is Popular:", fakeObject.isPopular));
+    let mass = asteroid.mass;
+    let massString = mass == null ? "[Not Found]" : `${asteroid.mass.massValue}x10^${asteroid.mass.massExponent}`;
+    ul.appendChild(buildItemDataRow("Mass:", massString));
+    ul.appendChild(buildItemDataRow("Mean Radius:", asteroid.meanRadius));
+    ul.appendChild(buildItemDataRow("Discovered:", asteroid.discoveryDate));
 
     return itemDiv;
 }
@@ -80,7 +65,6 @@ function buildItemDataRow(rowLabel, rowValue)
 
 function moveClickedItem(clickEvent)
 {
-    console.log("click");
     let target = clickEvent.target;
     target.classList.remove("transition");
     let curParent = target.parentElement;
