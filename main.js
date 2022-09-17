@@ -4,11 +4,25 @@ const collectionFavorites = document.querySelector("#collection-favorites");
 const collectionMainSort = document.querySelector("#collectionMainSort");
 const collectionFavSort = document.querySelector("#collectionFavSort");
 const asteroids = new Map();
+const sortSettings = new Map([
+    [collectionMain, false],
+    [collectionFavorites, false],
+])
+let reverseMain = true;
+let reverseFavs = false;
 //#endregion
 //#region Execution
 fetch("https://api.le-systeme-solaire.net/rest/bodies?filter[]=bodyType,eq,asteroid&filter[]=meanRadius,gt,0").then(response => response.json()).then(data => buildCollectionMain(data));
-collectionMainSort.addEventListener("click", () => sortCollection(collectionMain));
-collectionFavSort.addEventListener("click", () => sortCollection(collectionFavorites));
+collectionMainSort.addEventListener("click", () => {
+    let curSetting = sortSettings.get(collectionMain);
+    sortSettings.set(collectionMain, !curSetting);
+    sortCollection(collectionMain);
+});
+collectionFavSort.addEventListener("click", () => {
+    let curSetting = sortSettings.get(collectionFavorites);
+    sortSettings.set(collectionFavorites, !curSetting);
+    sortCollection(collectionFavorites);
+});
 //endregion
 //#region Functions
 function buildCollectionMain(data)
@@ -76,6 +90,7 @@ function moveClickedItem(clickEvent)
     let newParent = curParent === collectionMain ? collectionFavorites : collectionMain;
     let startRect = target.getBoundingClientRect();
     newParent.appendChild(target)
+    sortCollection(newParent);
     let endRect = target.getBoundingClientRect();
     let differenceX = startRect.x - endRect.x;
     let differenceY = startRect.y - endRect.y;
@@ -90,17 +105,26 @@ function sortCollection(targetCollection)
 {
     let children = targetCollection.childNodes;
     let childrenArr = Array.from(children);
-    childrenArr.sort((a, b) => compareStrings(a.dataset.astName, b.dataset.astName));
+    let reverse = sortSettings.get(targetCollection);
+    childrenArr.sort((a, b) => compareStrings(a.dataset.astName, b.dataset.astName, reverse));
     for (let child of childrenArr)
     {
         targetCollection.appendChild(child);
     }
 }
 
-function compareStrings(str1, str2)
+function compareStrings(str1, str2, reverse)
 {
-    if (str1.toLowerCase() < str2.toLowerCase()) { return -1; }
-    if (str1.toLowerCase() > str2.toLowerCase()) { return 1; }
+    if (str1.toLowerCase() < str2.toLowerCase()) 
+    { 
+        let result = reverse ? 1 : -1;
+        return result; 
+    }
+    if (str1.toLowerCase() > str2.toLowerCase()) 
+    { 
+        let result = reverse ? -1 : 1;
+        return result; 
+    }
     return 0;
 }
 //#endregion
