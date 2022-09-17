@@ -1,0 +1,42 @@
+.item-list {
+    background: black;
+    padding: 20px;
+    max-width: 20rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 200px;
+    min-width: 200px;
+}
+
+.item {
+    background: gray;
+    border-radius: 20px;
+    padding: 15px;
+    position: relative;
+}
+
+.item h2,
+.item ul {
+    pointer-events: none;
+}
+
+.item h2 {
+    margin-top: 0;
+}
+
+.item ul {
+    list-style: none;
+    margin-left: 0;
+    padding-inline-start: 10px;
+}
+
+.list-container {
+    display: flex;
+    gap: 20px;
+}
+
+.transition {
+    transition: 0.25s;
+    /* transition-timing-function: linear; */
+}
