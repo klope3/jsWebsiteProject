@@ -35,6 +35,7 @@ function buildCollectionMain(data)
         collectionMain.appendChild(builtEntry);
     }
     console.log(asteroids);
+    sortCollection(collectionMain);
 }
 
 function buildEntry(asteroid)

@@ -1,12 +1,21 @@
-.item-list {
+body {
+    margin: 0;
+}
+
+.item-list-scrollview {
     background: black;
+    position: relative;
+    width: 300px;
+}
+
+.item-list {
     padding: 20px;
     max-width: 20rem;
     display: flex;
     flex-direction: column;
     gap: 10px;
     min-height: 200px;
-    min-width: 200px;
+    position: relative;
 }
 
 .item {
@@ -14,6 +23,7 @@
     border-radius: 20px;
     padding: 15px;
     position: relative;
+    z-index: 1;
 }
 
 .item h2,
@@ -34,9 +44,41 @@
 .list-container {
     display: flex;
     gap: 20px;
+    height: 100vh;
+    overflow: hidden;
+    justify-content: space-between;
+}
+
+.sortButton {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 95%;
+    z-index: 100;
 }
 
 .transition {
     transition: 0.25s;
     /* transition-timing-function: linear; */
+}
+
+@media screen and (max-width: 768px) {
+    .item ul span {
+        display: block;
+    }
+
+    .item-list {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .item {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .item-list-scrollview {
+        width: 200px;
+    }
 }
