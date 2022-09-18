@@ -3,6 +3,8 @@ const collectionMain = document.querySelector("#collection-main");
 const collectionFavorites = document.querySelector("#collection-favorites");
 const collectionMainSort = document.querySelector("#collectionMainSort");
 const collectionFavSort = document.querySelector("#collectionFavSort");
+const collectionMainSum = document.querySelector("#collectionMainSum");
+const collectionFavSum = document.querySelector("#collectionFavSum");
 const asteroids = new Map();
 const sortSettings = new Map([
     [collectionMain, false],
@@ -92,6 +94,7 @@ function moveClickedItem(clickEvent)
     let startRect = target.getBoundingClientRect();
     newParent.appendChild(target)
     sortCollection(newParent);
+    updateSums();
     let endRect = target.getBoundingClientRect();
     let differenceX = startRect.x - endRect.x;
     let differenceY = startRect.y - endRect.y;
@@ -100,6 +103,11 @@ function moveClickedItem(clickEvent)
         target.classList.add("transition");
         target.style.transform = "translate(0)";
     }, 1);
+}
+
+function updateSums()
+{
+
 }
 
 function sortCollection(targetCollection)

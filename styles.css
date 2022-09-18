@@ -7,11 +7,11 @@
     --gradient2-dark: rgb(25, 50, 46);
     --gradient2-bright: rgb(51, 101, 100);
     --gradient2-brighter: rgb(103, 202, 197);
+    --list-width: 300px;
 }
 
 body {
     margin: 0;
-    background-image: linear-gradient(180deg, var(--gradient2-darker), var(--gradient2-dark));
     font-family: 'Teko', sans-serif;
 }
 
@@ -19,17 +19,25 @@ body {
     width: 100vw;
     height: 100vh;
     background-image: url("./assets/images/bg-texture.png");
-    position: absolute;
+    position: fixed;
     background-size: 10px;
     opacity: 0.07;
+}
+
+.bg-gradient {
+    width: 100vw;
+    height: 100vh;
+    background-image: linear-gradient(180deg, var(--gradient2-darker), var(--gradient2-dark));
+    position: fixed;
 }
 
 .item-list-scrollview {
     background: black;
     position: relative;
-    width: 300px;
+    width: var(--list-width);
     border-right: 2px solid var(--gradient1-brighter);
     border-left: 2px solid var(--gradient1-brighter);
+    padding-bottom: 60px;
 }
 
 .item-list {
@@ -75,18 +83,45 @@ body {
 .list-container {
     display: flex;
     gap: 20px;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    /* height: 100vh; */
+    /* overflow: hidden; */
     justify-content: space-between;
 }
 
-.sortButton {
+/* .sortButton {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     top: 95%;
     z-index: 100;
+} */
+
+.sortButton {
+    width: 70px;
+}
+
+.dashboard {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 46px;
+    z-index: 100;
+    min-height: 0;
+    background: black;
+    padding: 10px;
+    border-top: 2px solid var(--gradient1-brighter);
+}
+
+.dashboard-panel {
+    display: flex;
+    gap: 20px;
+}
+
+.collection-sum {
+    color: yellow;
 }
 
 .transition {
@@ -95,6 +130,10 @@ body {
 }
 
 @media screen and (max-width: 768px) {
+    :root {
+        --list-width: 200px;
+    }
+
     .item ul span {
         display: block;
     }
