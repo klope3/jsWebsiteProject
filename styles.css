@@ -118,10 +118,13 @@ body {
 .dashboard-panel {
     display: flex;
     gap: 20px;
+    align-items: center;
 }
 
 .collection-sum {
     color: yellow;
+    text-align: center;
+    font-size: 1.9rem;
 }
 
 .transition {
@@ -150,5 +153,16 @@ body {
 
     .item-list-scrollview {
         width: 200px;
+    }
+}
+
+@media screen and (max-width: 420px)
+{
+    .dashboard-panel {
+        gap: 6px;
+    }
+
+    .collection-sum {
+        font-size: 1.2rem;
     }
 }
