@@ -31,6 +31,29 @@ body {
     position: fixed;
 }
 
+.banner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 40px;
+    color: yellow;
+    z-index: 100;
+    background: black;
+    border-bottom: 2px solid var(--gradient1-brighter);
+}
+
+.banner-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin: auto;
+}
+
+.banner-title {
+    font-size: 2rem;
+}
+
 .item-list-scrollview {
     background: black;
     position: relative;
@@ -38,6 +61,7 @@ body {
     border-right: 2px solid var(--gradient1-brighter);
     border-left: 2px solid var(--gradient1-brighter);
     padding-bottom: 60px;
+    padding-top: 30px;
 }
 
 .item-list {
