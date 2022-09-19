@@ -64,6 +64,22 @@ body {
     padding-top: 30px;
 }
 
+#loading-spinner {
+    color: white;
+    position: absolute;
+    left: 40%;
+    top: 30%;
+    font-size: 3rem;
+    animation: loading-animation 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes loading-animation {
+    0% {rotate: 0deg;}
+    100% {rotate: 360deg;}
+}
+
 .item-list {
     padding: 20px;
     max-width: 20rem;

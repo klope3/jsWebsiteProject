@@ -85,7 +85,10 @@ const collectionFavSort = document.querySelector("#collectionFavSort");
 const cardObjects = new Map();
 //#endregion
 //#region Execution
-fetch("https://api.le-systeme-solaire.net/rest/bodies?filter[]=bodyType,eq,asteroid&filter[]=meanRadius,gt,0").then(response => response.json()).then(data => buildCollectionMain(data));
+fetch("https://api.le-systeme-solaire.net/rest/bodies?filter[]=bodyType,eq,asteroid&filter[]=meanRadius,gt,0").then(response => response.json()).then(data => {
+    document.querySelector("#loading-spinner").style.display = "none";
+    buildCollectionMain(data);
+});
 collectionMainSort.addEventListener("click", () => {
     collectionMain.invertSortSetting();
     sortCollection(collectionMain);
