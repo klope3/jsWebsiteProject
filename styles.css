@@ -124,22 +124,17 @@ body {
     display: flex;
     gap: 20px;
     min-height: 100vh;
-    /* height: 100vh; */
-    /* overflow: hidden; */
     justify-content: space-between;
 }
 
-/* .sortButton {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 95%;
-    z-index: 100;
-} */
-
-.sortButton {
-    width: 70px;
+.sort-button {
+    width: 48px;
+    height: 40px;
+    font-size: 1.5rem;
+    color: var(--gradient1-brighter);
+    background-image: linear-gradient(180deg, var(--gradient2-darker), var(--gradient2-dark));
+    border: 2px solid var(--gradient1-brighter);
+    border-radius: 5px;
 }
 
 .dashboard {
@@ -169,7 +164,6 @@ body {
 
 .transition {
     transition: 0.25s;
-    /* transition-timing-function: linear; */
 }
 
 @media screen and (max-width: 768px) {
